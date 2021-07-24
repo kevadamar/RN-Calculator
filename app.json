@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "RN-Calculator",
+    "name": "Calculator",
     "slug": "RN-Calculator",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/iconnew.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splashn.png",
       "resizeMode": "contain",
       "backgroundColor": "#FFA1A1"
     },
