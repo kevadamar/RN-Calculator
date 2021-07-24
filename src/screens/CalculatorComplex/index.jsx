@@ -1,12 +1,13 @@
-import { Box, Container, HStack, VStack } from 'native-base';
+import { HStack, VStack } from 'native-base';
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
 import ButtonReuse from '../../components/ButtonReuse';
 import DisplayCalculator from '../../components/DisplayCalculator';
 
-const CalculatorComplex = () => {
+const CalculatorComplex = ({ navigation }) => {
   const [currentNumber, setCurrentNumber] = React.useState('');
   const [lastNumber, setLastNumber] = React.useState('');
+  const [historyNumbers, setHistoryNumbers] = React.useState([]);
 
   const titleBtn = [
     {
@@ -31,7 +32,8 @@ const CalculatorComplex = () => {
       btnPressed === '+' ||
       btnPressed === '-' ||
       btnPressed === '*' ||
-      btnPressed === '/'
+      btnPressed === '/' ||
+      btnPressed === '%'
     ) {
       setCurrentNumber(currentNumber + btnPressed);
       return;
@@ -45,8 +47,10 @@ const CalculatorComplex = () => {
         setLastNumber('');
         setCurrentNumber('');
         return;
+      case '~':
+        navigation.navigate('History', { historyNumbers });
+        return;
       case '=':
-        setLastNumber(currentNumber + '=');
         calculate();
         return;
     }
@@ -55,18 +59,26 @@ const CalculatorComplex = () => {
 
   const calculate = () => {
     let lastArr = currentNumber[currentNumber.length - 1];
+    // console.log(lastArr);
     if (
       lastArr === '/' ||
       lastArr === '*' ||
       lastArr === '-' ||
       lastArr === '+' ||
-      lastArr === '.'
+      lastArr === '%' ||
+      lastArr === '='
     ) {
-      setCurrentNumber(currentNumber);
+      return;
     } else {
       if (!currentNumber) return;
       let result = eval(currentNumber).toString();
+      setLastNumber(currentNumber + '=');
       setCurrentNumber(result);
+
+      setHistoryNumbers((currNumbers) => [
+        ...currNumbers,
+        { calc: currentNumber + '=', resultCalc: result },
+      ]);
       return;
     }
   };
