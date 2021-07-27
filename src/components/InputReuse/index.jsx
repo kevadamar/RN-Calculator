@@ -1,23 +1,25 @@
 import React from 'react';
-import { Input, NumberInput, NumberInputField } from 'native-base';
+
+import { TextInput } from 'react-native';
 
 const InputReuse = ({ setValue, value }) => {
   return (
-    <NumberInput
+    <TextInput
       value={value}
-      onChange={(v) => {
-        setValue(isNaN(v) ? 0 : v);
+      defaultValue={''}
+      onChangeText={(v) => {
+        if (!v.match(/[^\d+(,\d\d\d)*.\d+$]/) || !v.length) setValue(v);
       }}
-    >
-      <NumberInputField
-        value={value}
-        color="#000"
-        borderColor="#FFF"
-        backgroundColor="#FFF"
-        _focus={{ borderColor: '#FFF' }}
-        padding={2}
-      />
-    </NumberInput>
+      placeholder="Input. . ."
+      keyboardType="numeric"
+      style={{
+        borderColor: '#FFF',
+        borderWidth: 1,
+        padding: 10,
+        borderRadius: 10,
+        backgroundColor: '#FFF',
+      }}
+    />
   );
 };
 

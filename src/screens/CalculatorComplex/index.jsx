@@ -76,8 +76,8 @@ const CalculatorComplex = ({ navigation }) => {
       setCurrentNumber(result);
 
       setHistoryNumbers((currNumbers) => [
-        ...currNumbers,
         { calc: currentNumber + '=', resultCalc: result },
+        ...currNumbers,
       ]);
       return;
     }

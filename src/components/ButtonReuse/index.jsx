@@ -5,7 +5,7 @@ import { Text } from 'react-native';
 const ButtonReuse = (props) => {
   const { onPress, title } = props;
   return (
-    <Button onPress={onPress} {...props}>
+    <Button onPress={() => onPress()} {...props}>
       <Text style={{ color: '#FFF', fontWeight: 'bold', fontSize: 20 }}>
         {title}
       </Text>

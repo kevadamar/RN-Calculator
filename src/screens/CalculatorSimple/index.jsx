@@ -6,26 +6,27 @@ import InputReuse from '../../components/InputReuse';
 import _global from '../../styles/_global';
 
 const CalculatorSimple = ({ navigation }) => {
-  const [firstValue, setFirstValue] = React.useState(0);
-  const [secondValue, setSecondValue] = React.useState(0);
+  const [firstValue, setFirstValue] = React.useState('');
+  const [secondValue, setSecondValue] = React.useState('');
 
   const [resultCalculate, setResultCalculate] = React.useState(0);
 
   const operators = ['+', '-', '*', '/', '%'];
 
   const handleCalculate = (operator) => {
-    if (!firstValue && !secondValue) return;
+    if (!firstValue || !secondValue) return;
 
-    if (operator === '+')
-      setResultCalculate(parseInt(firstValue) + parseInt(secondValue));
-    if (operator === '-')
-      setResultCalculate(parseInt(firstValue) - parseInt(secondValue));
-    if (operator === '*')
-      setResultCalculate(parseInt(firstValue) * parseInt(secondValue));
-    if (operator === '/')
-      setResultCalculate(parseInt(firstValue) / parseInt(secondValue));
-    if (operator === '%')
-      setResultCalculate(parseInt(firstValue) % parseInt(secondValue));
+    setResultCalculate(
+      eval(
+        `${
+          firstValue.includes(',') ? firstValue.replace(',', '.') : firstValue
+        }${operator}${
+          secondValue.includes(',')
+            ? secondValue.replace(',', '.')
+            : secondValue
+        }`,
+      ),
+    );
   };
 
   const _keyboardDidShow = React.useCallback(() => {
